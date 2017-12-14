@@ -1,34 +1,28 @@
 import React, { Component } from 'react';
 import './App.css';
+import {
+  BrowserRouter as Router,
+  Route
+} from 'react-router-dom'
 
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import * as todoActions from './actions/todo';
-
-import TodoInput from './components/TodoInput'
-import TodoList from './components/TodoList/TodoList'
+import Login from './components/Login'
+import Dashboard from './components/Dashboard'
+import TopNav from './components/TopNav'
 
 export class App extends Component {
 
-  mySubmit(values) {
-    console.log('the vals', values);
-    console.log('the props', this);
-    this.props.actions.addToList(values.title)
-  }
-
   render() {
     return (
-      <div>
-        <TodoInput onSubmit={this.mySubmit.bind(this)}/>
-        <TodoList/>
-      </div>
+      <Router>
+        <div>
+          <TopNav />
+
+          <Route exact path="/" component={Login}/>
+          <Route path="/dashboard" component={Dashboard}/>
+        </div>
+      </Router>
     );
   }
 }
 
-function mapDispatchToProps(dispatch) {
-    return {
-        actions: bindActionCreators(todoActions, dispatch)
-    }
-}
-export default connect(null, mapDispatchToProps)(App);
+export default App;

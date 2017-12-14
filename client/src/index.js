@@ -4,6 +4,7 @@ import App from './App';
 import { Provider } from 'react-redux';
 import Store from './store';
 import './index.css';
+import 'bootswatch/dist/cerulean/bootstrap.min.css'
 
 const StoreInstance = Store();
 
