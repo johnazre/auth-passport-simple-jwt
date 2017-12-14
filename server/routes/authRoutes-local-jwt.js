@@ -1,0 +1,3 @@
+/*
+  Authentication with Passport JWT and Passport Local Strategy
+*/
