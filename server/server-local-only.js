@@ -11,11 +11,6 @@ var passport = require('passport')
 // Express router instance
 var app = express()
 
-// These are only related to our views folder and the fact that
-// we are using EJS as a template rendering library.
-app.set('views', path.join(__dirname, 'views'))
-app.set('view engine', 'ejs')
-
 app.use(logger('dev'))
 app.use(cors())
 app.use(bodyParser.json())
