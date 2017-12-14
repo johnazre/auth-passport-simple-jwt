@@ -8,6 +8,7 @@ import {
 import Login from './components/Login'
 import Dashboard from './components/Dashboard'
 import TopNav from './components/TopNav'
+import CheckAuth from './components/CheckAuth'
 
 export class App extends Component {
 
@@ -18,7 +19,7 @@ export class App extends Component {
           <TopNav />
 
           <Route exact path="/" component={Login}/>
-          <Route path="/dashboard" component={Dashboard}/>
+          <Route path="/dashboard" component={CheckAuth(Dashboard)}/>
         </div>
       </Router>
     );

@@ -9,7 +9,7 @@ import { authUser } from '../actions/auth'
 class Login extends Component {
 
   authUser = (creds) => {
-    this.props.authUser(creds);
+    this.props.authUser(creds, this.props.history)
   }
 
   render() {
