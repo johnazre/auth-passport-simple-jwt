@@ -3,8 +3,7 @@ const router = express.Router();
 const knex = require('../db/knex');
 const bcrypt = require('bcrypt-nodejs')
 const passport = require('passport')
-const passportConfig = require('../config/auth-local-only')
-
+require('../config/auth-local-only')
 
 /*
   Authentication with only Passport Local Strategy and bcrypt
@@ -32,7 +31,9 @@ router.post('/signup', function(req, res) {
 });
 
 router.post('/signin', requireSignin, function(req, res) {
-  res.send({ message: 'successful sign in', user: req.user })
+  console.log('req.user', req.user)
+  let { id, name, email } = req.user;
+  res.send({ message: 'successful sign in', user: {id, name, email}, authenticated:true })
 });
 
 module.exports = router
