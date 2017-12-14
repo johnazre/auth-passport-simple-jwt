@@ -1,16 +1,21 @@
-var express = require('express');
-var router = express.Router();
-var knex = require('../db/knex');
+const express = require('express');
+const router = express.Router();
+const knex = require('../db/knex');
+const bcrypt = require('bcrypt-nodejs')
+const passport = require('passport')
+const passportConfig = require('../config/auth-local-only')
+
 
 /*
   Authentication with only Passport Local Strategy and bcrypt
 */
 
-router.post('/signup', function(req, res) {
-  let email = req.body.email
-  let password = req.body.password
+const requireSignin = passport.authenticate('local', { session: false })
 
-  if(!email || !password) {
+router.post('/signup', function(req, res) {
+  let { email, password, name } = req.body;
+
+  if(!email || !password || !name) {
     return res.status(422).send({error: 'You must provide an email and password'})
   }
 
@@ -19,13 +24,15 @@ router.post('/signup', function(req, res) {
       if(user.length > 0){
         res.status(422).send({ error: 'Email is in use'})
       } else {
-        var hash = bcrypt.hashSync(password);
-        knex('users').insert({ email, password: hash }).returning('*')
+        const hash = bcrypt.hashSync(password);
+        knex('users').insert({ name, email, password: hash }).returning('*')
           .then(user => res.json({user: req.user, message: 'you have successfully created a signup'}))
       }
     })
 });
 
 router.post('/signin', requireSignin, function(req, res) {
-  res.send({ token: tokenForUser(req.user)})
+  res.send({ message: 'successful sign in', user: req.user })
 });
+
+module.exports = router
